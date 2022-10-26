@@ -12,7 +12,7 @@ namespace sistemaRH.Models
         {
         }
 
-        public DbSet<Cadastro> Cadastros { get; set; }
+        public DbSet<Login> Logins { get; set; }
 
     }
 }
