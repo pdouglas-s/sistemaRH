@@ -12,6 +12,8 @@ namespace sistemaRH.Models
     public class Login
     {
         [Key]
+        public int Id { get; set; } = default!;
+
         [Required(ErrorMessage = "Obrigatório informar usuário!")]
         public string Usuario { get; set; } = default!;
 

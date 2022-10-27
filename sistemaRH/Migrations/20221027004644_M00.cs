@@ -12,12 +12,14 @@ namespace sistemaRH.Migrations
                 name: "Logins",
                 columns: table => new
                 {
-                    Usuario = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Usuario = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Senha = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Logins", x => x.Usuario);
+                    table.PrimaryKey("PK_Logins", x => x.Id);
                 });
         }
 

@@ -11,7 +11,7 @@ using sistemaRH.Models;
 namespace sistemaRH.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221027003913_M00")]
+    [Migration("20221027004644_M00")]
     partial class M00
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,14 +25,21 @@ namespace sistemaRH.Migrations
 
             modelBuilder.Entity("sistemaRH.Models.Login", b =>
                 {
-                    b.Property<string>("Usuario")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Senha")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Usuario");
+                    b.Property<string>("Usuario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Logins");
                 });
