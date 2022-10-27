@@ -8,16 +8,20 @@ namespace sistemaRH.Models
    
     public class Cadastro
     {
-        [Required(ErrorMessage = "Obrigatório informar tipo inscrição!")]
-        public int IdTpInsc { get; set; } = default!;
-
         [Key]
-        [Required(ErrorMessage = "Obrigatório informar CPF!")]
-        public int CpfCnpj { get; set; } = default!;
+        public int IdCadastro { get; set; } = default!;
+        
+        [Required(ErrorMessage = "Obrigatório informar nome!")]
+        public string Nome { get; set; } = default!;
 
-        [Required(ErrorMessage = "Obrigatório informar nome ou razão social!")]
-        public string NomeRazSoc { get; set; } = default!;
+        [Required(ErrorMessage = "Obrigatório informar email!")]
+        public string Email { get; set; } = default!;
 
+        [Required(ErrorMessage = "Obrigatório informar senha!")]
+        public string Senha { get; set; } = default!;
+
+        [Required(ErrorMessage = "Obrigatório confirmar senha!")]
+        public string ConfirmaSenha { get; set; } = default!;
 
     }
 }

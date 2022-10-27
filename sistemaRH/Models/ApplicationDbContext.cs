@@ -11,7 +11,6 @@ namespace sistemaRH.Models
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-        public DbSet<Login> Logins { get; set; } = default!;
+        public DbSet<Cadastro> Cadastros { get; set; } = default!;
     }
 }
-    
