@@ -23,5 +23,7 @@ namespace sistemaRH.Models
         [Required(ErrorMessage = "Obrigatório confirmar senha!")]
         public string ConfirmaSenha { get; set; } = default!;
 
+        public ICollection<ValorHora> ValorHoras { get; set; } = default!;
+
     }
 }

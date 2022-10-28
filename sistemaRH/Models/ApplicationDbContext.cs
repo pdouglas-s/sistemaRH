@@ -12,5 +12,6 @@ namespace sistemaRH.Models
         {
         }
         public DbSet<Cadastro> Cadastros { get; set; } = default!;
+        public DbSet<ValorHora> ValorHoras { get; set; } = default!;
     }
 }
