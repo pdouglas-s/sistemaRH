@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using sistemaRH.Models;
 
@@ -11,9 +12,10 @@ using sistemaRH.Models;
 namespace sistemaRH.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221029175430_M005")]
+    partial class M005
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,14 +42,12 @@ namespace sistemaRH.Migrations
                     b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ValorHoraId")
+                    b.Property<int>("VeiculoId")
                         .HasColumnType("int");
 
                     b.HasKey("IdAtividade");
 
-                    b.HasIndex("UsuarioId");
-
-                    b.HasIndex("ValorHoraId");
+                    b.HasIndex("VeiculoId");
 
                     b.ToTable("Atividades");
                 });
@@ -82,14 +82,9 @@ namespace sistemaRH.Migrations
                     b.Property<int?>("UsuarioIdCadastro")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ValorHoraIdValorHora")
-                        .HasColumnType("int");
-
                     b.HasKey("IdCadastro");
 
                     b.HasIndex("UsuarioIdCadastro");
-
-                    b.HasIndex("ValorHoraIdValorHora");
 
                     b.ToTable("Usuarios");
                 });
@@ -114,19 +109,11 @@ namespace sistemaRH.Migrations
                 {
                     b.HasOne("sistemaRH.Models.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("sistemaRH.Models.ValorHora", "ValorHoras")
-                        .WithMany()
-                        .HasForeignKey("ValorHoraId")
+                        .HasForeignKey("VeiculoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Usuario");
-
-                    b.Navigation("ValorHoras");
                 });
 
             modelBuilder.Entity("sistemaRH.Models.Usuario", b =>
@@ -134,18 +121,9 @@ namespace sistemaRH.Migrations
                     b.HasOne("sistemaRH.Models.Usuario", null)
                         .WithMany("Usuarios")
                         .HasForeignKey("UsuarioIdCadastro");
-
-                    b.HasOne("sistemaRH.Models.ValorHora", null)
-                        .WithMany("Usuarios")
-                        .HasForeignKey("ValorHoraIdValorHora");
                 });
 
             modelBuilder.Entity("sistemaRH.Models.Usuario", b =>
-                {
-                    b.Navigation("Usuarios");
-                });
-
-            modelBuilder.Entity("sistemaRH.Models.ValorHora", b =>
                 {
                     b.Navigation("Usuarios");
                 });

@@ -10,20 +10,13 @@ namespace sistemaRH.Models
         [Key]
         public int IdValorHora { get; set; } 
 
-        [Column(TypeName ="decimal(18,2")]
+        [Column(TypeName ="decimal(18,2)")]
         [Required(ErrorMessage = "Obrigatório informar o valor!")]
         public decimal Valor { get; set; } = default!;
 
-        [Display(Name = "Nível dificuldade")]
-        [Required(ErrorMessage = "Obrigatório informar o nível de dificuldade!")]
-        public NivelDificuldade Grau { get; set; }
+        public ICollection<Usuario> Usuarios { get; set; } = default!;
 
     }
 
-    public enum NivelDificuldade
-    {
-        Pequeno,
-        Médio,
-        Alto
-    }
+
 }
