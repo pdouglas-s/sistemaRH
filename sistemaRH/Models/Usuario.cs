@@ -7,7 +7,7 @@ namespace sistemaRH.Models
     public class Usuario
     {
         [Key]
-        public int IdCadastro { get; set; } = default!;
+        public int IdCadastro { get; set; }
 
         [Required(ErrorMessage = "Obrigatório informar nome!")]
         public string Nome { get; set; } = default!;
@@ -25,7 +25,7 @@ namespace sistemaRH.Models
         public string ConfirmaSenha { get; set; } = default!;
 
         [Required(ErrorMessage = "Obrigatório informar perfil!")]
-        public Perfil Perfil { get; set; } = default!;
+        public Perfil Perfil { get; set; }
     }
     public enum Perfil{
         User}
