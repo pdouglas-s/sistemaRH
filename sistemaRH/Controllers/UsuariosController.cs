@@ -9,85 +9,94 @@ using sistemaRH.Models;
 
 namespace sistemaRH.Controllers
 {
-    public class CadastrosController : Controller
+    public class UsuariosController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CadastrosController(ApplicationDbContext context)
+        public UsuariosController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Cadastros
+        // Configura login
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+
+        // GET: Usuarios
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Cadastros.ToListAsync());
+              return View(await _context.Usuarios.ToListAsync());
         }
 
-        // GET: Cadastros/Details/5
+        // GET: Usuarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Cadastros == null)
+            if (id == null || _context.Usuarios == null)
             {
                 return NotFound();
             }
 
-            var cadastro = await _context.Cadastros
+            var usuario = await _context.Usuarios
                 .FirstOrDefaultAsync(m => m.IdCadastro == id);
-            if (cadastro == null)
+            if (usuario == null)
             {
                 return NotFound();
             }
 
-            return View(cadastro);
+            return View(usuario);
         }
 
-        // GET: Cadastros/Create
+        // GET: Usuarios/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Cadastros/Create
+        // POST: Usuarios/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdCadastro,Nome,Email,Senha,ConfirmaSenha")] Cadastro cadastro)
+        public async Task<IActionResult> Create([Bind("IdCadastro,Nome,Email,Senha,ConfirmaSenha,Perfil")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cadastro);
+                usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
+                usuario.ConfirmaSenha = BCrypt.Net.BCrypt.HashPassword(usuario.ConfirmaSenha);
+                _context.Add(usuario);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(cadastro);
+            return View(usuario);
         }
 
-        // GET: Cadastros/Edit/5
+        // GET: Usuarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Cadastros == null)
+            if (id == null || _context.Usuarios == null)
             {
                 return NotFound();
             }
 
-            var cadastro = await _context.Cadastros.FindAsync(id);
-            if (cadastro == null)
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
             {
                 return NotFound();
             }
-            return View(cadastro);
+            return View(usuario);
         }
 
-        // POST: Cadastros/Edit/5
+        // POST: Usuarios/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdCadastro,Nome,Email,Senha,ConfirmaSenha")] Cadastro cadastro)
+        public async Task<IActionResult> Edit(int id, [Bind("IdCadastro,Nome,Email,Senha,ConfirmaSenha,Perfil")] Usuario usuario)
         {
-            if (id != cadastro.IdCadastro)
+            if (id != usuario.IdCadastro)
             {
                 return NotFound();
             }
@@ -96,12 +105,14 @@ namespace sistemaRH.Controllers
             {
                 try
                 {
-                    _context.Update(cadastro);
+                    usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
+                    usuario.ConfirmaSenha = BCrypt.Net.BCrypt.HashPassword(usuario.ConfirmaSenha);
+                    _context.Update(usuario);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CadastroExists(cadastro.IdCadastro))
+                    if (!UsuarioExists(usuario.IdCadastro))
                     {
                         return NotFound();
                     }
@@ -112,49 +123,49 @@ namespace sistemaRH.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cadastro);
+            return View(usuario);
         }
 
-        // GET: Cadastros/Delete/5
+        // GET: Usuarios/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Cadastros == null)
+            if (id == null || _context.Usuarios == null)
             {
                 return NotFound();
             }
 
-            var cadastro = await _context.Cadastros
+            var usuario = await _context.Usuarios
                 .FirstOrDefaultAsync(m => m.IdCadastro == id);
-            if (cadastro == null)
+            if (usuario == null)
             {
                 return NotFound();
             }
 
-            return View(cadastro);
+            return View(usuario);
         }
 
-        // POST: Cadastros/Delete/5
+        // POST: Usuarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Cadastros == null)
+            if (_context.Usuarios == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Cadastros'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Usuarios'  is null.");
             }
-            var cadastro = await _context.Cadastros.FindAsync(id);
-            if (cadastro != null)
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario != null)
             {
-                _context.Cadastros.Remove(cadastro);
+                _context.Usuarios.Remove(usuario);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CadastroExists(int id)
+        private bool UsuarioExists(int id)
         {
-          return _context.Cadastros.Any(e => e.IdCadastro == id);
+          return _context.Usuarios.Any(e => e.IdCadastro == id);
         }
     }
 }

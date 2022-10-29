@@ -11,7 +11,7 @@ namespace sistemaRH.Models
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-        public DbSet<Cadastro> Cadastros { get; set; } = default!;
-        public DbSet<ValorHora> ValorHoras { get; set; } = default!;
+        public DbSet<Usuario> Usuarios{ get; set; } = default!;
+
     }
 }

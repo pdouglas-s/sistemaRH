@@ -11,8 +11,8 @@ using sistemaRH.Models;
 namespace sistemaRH.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221027230114_M01")]
-    partial class M01
+    [Migration("20221028230111_M001")]
+    partial class M001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace sistemaRH.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("sistemaRH.Models.Cadastro", b =>
+            modelBuilder.Entity("sistemaRH.Models.Usuario", b =>
                 {
                     b.Property<int>("IdCadastro")
                         .ValueGeneratedOnAdd()
@@ -43,13 +43,16 @@ namespace sistemaRH.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Perfil")
+                        .HasColumnType("int");
+
                     b.Property<string>("Senha")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdCadastro");
 
-                    b.ToTable("Cadastros");
+                    b.ToTable("Usuarios");
                 });
 #pragma warning restore 612, 618
         }
