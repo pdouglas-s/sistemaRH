@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20221028230039_M000.cs" />
+    <Compile Remove="Migrations\20221028230039_M000.Designer.cs" />
+    <Compile Remove="Migrations\20221028230111_M001.cs" />
+    <Compile Remove="Migrations\20221028230111_M001.Designer.cs" />
+    <Compile Remove="Migrations\20221029130937_m005.cs" />
+    <Compile Remove="Migrations\20221029130937_m005.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 

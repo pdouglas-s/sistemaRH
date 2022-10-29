@@ -13,5 +13,7 @@ namespace sistemaRH.Models
         }
         public DbSet<Usuario> Usuarios{ get; set; } = default!;
 
+        public DbSet<Atividade> Atividades { get; set; } = default!;
+
     }
 }
