@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using sistemaRH.Models;
 
@@ -10,9 +11,10 @@ using sistemaRH.Models;
 namespace sistemaRH.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221030124102_M011")]
+    partial class M011
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +54,7 @@ namespace sistemaRH.Migrations
                     b.Property<int>("AtividadeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CadastroId")
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
                     b.Property<int>("ValorHoraId")
@@ -62,7 +64,7 @@ namespace sistemaRH.Migrations
 
                     b.HasIndex("AtividadeId");
 
-                    b.HasIndex("CadastroId");
+                    b.HasIndex("UsuarioId");
 
                     b.HasIndex("ValorHoraId");
 
@@ -119,7 +121,7 @@ namespace sistemaRH.Migrations
 
             modelBuilder.Entity("sistemaRH.Models.Trabalho", b =>
                 {
-                    b.HasOne("sistemaRH.Models.Atividade", "Atividade")
+                    b.HasOne("sistemaRH.Models.Atividade", "Atividades")
                         .WithMany()
                         .HasForeignKey("AtividadeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -127,26 +129,21 @@ namespace sistemaRH.Migrations
 
                     b.HasOne("sistemaRH.Models.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("CadastroId")
+                        .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("sistemaRH.Models.ValorHora", "ValoHora")
-                        .WithMany("trabalhos")
+                    b.HasOne("sistemaRH.Models.ValorHora", "ValorHoras")
+                        .WithMany()
                         .HasForeignKey("ValorHoraId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Atividade");
+                    b.Navigation("Atividades");
 
                     b.Navigation("Usuario");
 
-                    b.Navigation("ValoHora");
-                });
-
-            modelBuilder.Entity("sistemaRH.Models.ValorHora", b =>
-                {
-                    b.Navigation("trabalhos");
+                    b.Navigation("ValorHoras");
                 });
 #pragma warning restore 612, 618
         }

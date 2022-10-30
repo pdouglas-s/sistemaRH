@@ -18,12 +18,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Nivel)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Usuario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ValorHoras)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -35,12 +29,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nivel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Usuario.ConfirmaSenha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ValorHoras.IdValorHora)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdAtividade">Edit</a> |

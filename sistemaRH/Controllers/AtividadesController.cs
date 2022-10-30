@@ -21,8 +21,7 @@ namespace sistemaRH.Controllers
         // GET: Atividades
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Atividades.Include(a => a.Usuario).Include(a => a.ValorHoras);
-            return View(await applicationDbContext.ToListAsync());
+              return View(await _context.Atividades.ToListAsync());
         }
 
         // GET: Atividades/Details/5
@@ -34,8 +33,6 @@ namespace sistemaRH.Controllers
             }
 
             var atividade = await _context.Atividades
-                .Include(a => a.Usuario)
-                .Include(a => a.ValorHoras)
                 .FirstOrDefaultAsync(m => m.IdAtividade == id);
             if (atividade == null)
             {
@@ -48,8 +45,6 @@ namespace sistemaRH.Controllers
         // GET: Atividades/Create
         public IActionResult Create()
         {
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdCadastro", "ConfirmaSenha");
-            ViewData["ValorHoraId"] = new SelectList(_context.ValorHoras, "IdValorHora", "IdValorHora");
             return View();
         }
 
@@ -58,7 +53,7 @@ namespace sistemaRH.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdAtividade,Descricao,Nivel,UsuarioId,ValorHoraId")] Atividade atividade)
+        public async Task<IActionResult> Create([Bind("IdAtividade,Descricao,Nivel")] Atividade atividade)
         {
             if (ModelState.IsValid)
             {
@@ -66,8 +61,6 @@ namespace sistemaRH.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdCadastro", "ConfirmaSenha", atividade.UsuarioId);
-            ViewData["ValorHoraId"] = new SelectList(_context.ValorHoras, "IdValorHora", "IdValorHora", atividade.ValorHoraId);
             return View(atividade);
         }
 
@@ -84,8 +77,6 @@ namespace sistemaRH.Controllers
             {
                 return NotFound();
             }
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdCadastro", "ConfirmaSenha", atividade.UsuarioId);
-            ViewData["ValorHoraId"] = new SelectList(_context.ValorHoras, "IdValorHora", "IdValorHora", atividade.ValorHoraId);
             return View(atividade);
         }
 
@@ -94,7 +85,7 @@ namespace sistemaRH.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdAtividade,Descricao,Nivel,UsuarioId,ValorHoraId")] Atividade atividade)
+        public async Task<IActionResult> Edit(int id, [Bind("IdAtividade,Descricao,Nivel")] Atividade atividade)
         {
             if (id != atividade.IdAtividade)
             {
@@ -121,8 +112,6 @@ namespace sistemaRH.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdCadastro", "ConfirmaSenha", atividade.UsuarioId);
-            ViewData["ValorHoraId"] = new SelectList(_context.ValorHoras, "IdValorHora", "IdValorHora", atividade.ValorHoraId);
             return View(atividade);
         }
 
@@ -135,8 +124,6 @@ namespace sistemaRH.Controllers
             }
 
             var atividade = await _context.Atividades
-                .Include(a => a.Usuario)
-                .Include(a => a.ValorHoras)
                 .FirstOrDefaultAsync(m => m.IdAtividade == id);
             if (atividade == null)
             {

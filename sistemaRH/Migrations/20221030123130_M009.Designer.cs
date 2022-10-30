@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using sistemaRH.Models;
 
@@ -10,9 +11,10 @@ using sistemaRH.Models;
 namespace sistemaRH.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221030123130_M009")]
+    partial class M009
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,34 +41,6 @@ namespace sistemaRH.Migrations
                     b.HasKey("IdAtividade");
 
                     b.ToTable("Atividades");
-                });
-
-            modelBuilder.Entity("sistemaRH.Models.Trabalho", b =>
-                {
-                    b.Property<int>("IdTrabalho")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTrabalho"), 1L, 1);
-
-                    b.Property<int>("AtividadeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CadastroId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ValorHoraId")
-                        .HasColumnType("int");
-
-                    b.HasKey("IdTrabalho");
-
-                    b.HasIndex("AtividadeId");
-
-                    b.HasIndex("CadastroId");
-
-                    b.HasIndex("ValorHoraId");
-
-                    b.ToTable("Trabalhos");
                 });
 
             modelBuilder.Entity("sistemaRH.Models.Usuario", b =>
@@ -115,38 +89,6 @@ namespace sistemaRH.Migrations
                     b.HasKey("IdValorHora");
 
                     b.ToTable("ValorHoras");
-                });
-
-            modelBuilder.Entity("sistemaRH.Models.Trabalho", b =>
-                {
-                    b.HasOne("sistemaRH.Models.Atividade", "Atividade")
-                        .WithMany()
-                        .HasForeignKey("AtividadeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("sistemaRH.Models.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("CadastroId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("sistemaRH.Models.ValorHora", "ValoHora")
-                        .WithMany("trabalhos")
-                        .HasForeignKey("ValorHoraId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Atividade");
-
-                    b.Navigation("Usuario");
-
-                    b.Navigation("ValoHora");
-                });
-
-            modelBuilder.Entity("sistemaRH.Models.ValorHora", b =>
-                {
-                    b.Navigation("trabalhos");
                 });
 #pragma warning restore 612, 618
         }

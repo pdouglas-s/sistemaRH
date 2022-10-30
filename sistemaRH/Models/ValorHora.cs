@@ -14,8 +14,6 @@ namespace sistemaRH.Models
         [Required(ErrorMessage = "Obrigatório informar o valor!")]
         public decimal Valor { get; set; } = default!;
 
-        public ICollection<Usuario> Usuarios { get; set; } = default!;
-
     }
 
 

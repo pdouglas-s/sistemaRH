@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using sistemaRH.Models;
 
@@ -10,9 +11,10 @@ using sistemaRH.Models;
 namespace sistemaRH.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221030132039_M015")]
+    partial class M015
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,34 +121,29 @@ namespace sistemaRH.Migrations
 
             modelBuilder.Entity("sistemaRH.Models.Trabalho", b =>
                 {
-                    b.HasOne("sistemaRH.Models.Atividade", "Atividade")
+                    b.HasOne("sistemaRH.Models.Atividade", "Atividades")
                         .WithMany()
                         .HasForeignKey("AtividadeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("sistemaRH.Models.Usuario", "Usuario")
+                    b.HasOne("sistemaRH.Models.Usuario", "Usuarios")
                         .WithMany()
                         .HasForeignKey("CadastroId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("sistemaRH.Models.ValorHora", "ValoHora")
-                        .WithMany("trabalhos")
+                    b.HasOne("sistemaRH.Models.ValorHora", "ValoHoras")
+                        .WithMany()
                         .HasForeignKey("ValorHoraId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Atividade");
+                    b.Navigation("Atividades");
 
-                    b.Navigation("Usuario");
+                    b.Navigation("Usuarios");
 
-                    b.Navigation("ValoHora");
-                });
-
-            modelBuilder.Entity("sistemaRH.Models.ValorHora", b =>
-                {
-                    b.Navigation("trabalhos");
+                    b.Navigation("ValoHoras");
                 });
 #pragma warning restore 612, 618
         }

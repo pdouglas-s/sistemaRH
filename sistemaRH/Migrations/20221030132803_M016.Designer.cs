@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using sistemaRH.Models;
 
@@ -10,9 +11,10 @@ using sistemaRH.Models;
 namespace sistemaRH.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221030132803_M016")]
+    partial class M016
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,7 +134,7 @@ namespace sistemaRH.Migrations
                         .IsRequired();
 
                     b.HasOne("sistemaRH.Models.ValorHora", "ValoHora")
-                        .WithMany("trabalhos")
+                        .WithMany()
                         .HasForeignKey("ValorHoraId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -142,11 +144,6 @@ namespace sistemaRH.Migrations
                     b.Navigation("Usuario");
 
                     b.Navigation("ValoHora");
-                });
-
-            modelBuilder.Entity("sistemaRH.Models.ValorHora", b =>
-                {
-                    b.Navigation("trabalhos");
                 });
 #pragma warning restore 612, 618
         }

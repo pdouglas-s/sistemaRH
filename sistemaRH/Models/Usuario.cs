@@ -27,8 +27,6 @@ namespace sistemaRH.Models
         [Required(ErrorMessage = "Obrigatório informar perfil!")]
         public Perfil Perfil { get; set; }
 
-        public ICollection<Usuario> Usuarios { get; set; } = default!;
-
     }
     public enum Perfil{
         User}
