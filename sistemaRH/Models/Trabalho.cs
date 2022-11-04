@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Net;
 
 namespace sistemaRH.Models
 {
@@ -9,25 +10,10 @@ namespace sistemaRH.Models
         [Key]
         public int IdTrabalho { get; set; }
 
-        [Display(Name = "Usuário")]
-        [Required(ErrorMessage = "Obrigatório informar usuário")]
-        public int CadastroId { get; set; } = default!;
+        public string DescTrabalho { get; set; }
+         public string cpf_usuario { get; set; }
+         [ForeignKey("cpf_usuario")]
+        public Usuario? Usuario { get; set; }
 
-        [ForeignKey("CadastroId")]
-        public Usuario Usuario { get; set; } = default!;
-
-        [Display(Name = "Atividade")]
-        [Required(ErrorMessage = "Obrigatório informar atividade")]
-        public int AtividadeId { get; set; } = default!;
-
-        [ForeignKey("AtividadeId")]
-        public Atividade Atividade { get; set; } = default!;
-
-        [Display(Name = "Valor hora")]
-        [Required(ErrorMessage = "Obrigatório informar atividade")]
-        public int ValorHoraId { get; set; } = default!;
-
-        [ForeignKey("ValorHoraId")]
-        public ValorHora ValoHora { get; set; } = default!;
     }
 }

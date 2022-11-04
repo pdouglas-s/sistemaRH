@@ -11,10 +11,10 @@ namespace sistemaRH.Models
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-        public DbSet<Usuario> Usuarios{ get; set; } = default!;
-        public DbSet<Atividade> Atividades { get; set; } = default!;
-        public DbSet<ValorHora> ValorHoras { get; set; } = default!;
-        public DbSet<Trabalho> Trabalhos { get; set; } = default!;
+        public DbSet<Usuario> Usuarios{ get; set; }
+      //  public DbSet<Atividade> Atividades { get; set; }
+      //  public DbSet<ValorHora> ValorHoras { get; set; }
+        public DbSet<Trabalho> Trabalhos { get; set; }
 
     }
 }

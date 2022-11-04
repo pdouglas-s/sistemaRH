@@ -11,7 +11,7 @@ using sistemaRH.Models;
 namespace sistemaRH.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221028230111_M001")]
+    [Migration("20221104152044_M001")]
     partial class M001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,13 +23,33 @@ namespace sistemaRH.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("sistemaRH.Models.Usuario", b =>
+            modelBuilder.Entity("sistemaRH.Models.Trabalho", b =>
                 {
-                    b.Property<int>("IdCadastro")
+                    b.Property<int>("IdTrabalho")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCadastro"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTrabalho"), 1L, 1);
+
+                    b.Property<string>("DescTrabalho")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("cpf_usuario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("IdTrabalho");
+
+                    b.HasIndex("cpf_usuario");
+
+                    b.ToTable("Trabalhos");
+                });
+
+            modelBuilder.Entity("sistemaRH.Models.Usuario", b =>
+                {
+                    b.Property<string>("cpf_usuario")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConfirmaSenha")
                         .IsRequired()
@@ -50,9 +70,25 @@ namespace sistemaRH.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdCadastro");
+                    b.HasKey("cpf_usuario");
 
                     b.ToTable("Usuarios");
+                });
+
+            modelBuilder.Entity("sistemaRH.Models.Trabalho", b =>
+                {
+                    b.HasOne("sistemaRH.Models.Usuario", "Usuario")
+                        .WithMany("Trabalho")
+                        .HasForeignKey("cpf_usuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("sistemaRH.Models.Usuario", b =>
+                {
+                    b.Navigation("Trabalho");
                 });
 #pragma warning restore 612, 618
         }

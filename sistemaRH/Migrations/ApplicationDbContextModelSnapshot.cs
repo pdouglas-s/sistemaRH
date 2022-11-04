@@ -21,26 +21,6 @@ namespace sistemaRH.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("sistemaRH.Models.Atividade", b =>
-                {
-                    b.Property<int>("IdAtividade")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdAtividade"), 1L, 1);
-
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Nivel")
-                        .HasColumnType("int");
-
-                    b.HasKey("IdAtividade");
-
-                    b.ToTable("Atividades");
-                });
-
             modelBuilder.Entity("sistemaRH.Models.Trabalho", b =>
                 {
                     b.Property<int>("IdTrabalho")
@@ -49,33 +29,25 @@ namespace sistemaRH.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTrabalho"), 1L, 1);
 
-                    b.Property<int>("AtividadeId")
-                        .HasColumnType("int");
+                    b.Property<string>("DescTrabalho")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CadastroId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ValorHoraId")
-                        .HasColumnType("int");
+                    b.Property<string>("cpf_usuario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("IdTrabalho");
 
-                    b.HasIndex("AtividadeId");
-
-                    b.HasIndex("CadastroId");
-
-                    b.HasIndex("ValorHoraId");
+                    b.HasIndex("cpf_usuario");
 
                     b.ToTable("Trabalhos");
                 });
 
             modelBuilder.Entity("sistemaRH.Models.Usuario", b =>
                 {
-                    b.Property<int>("IdCadastro")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCadastro"), 1L, 1);
+                    b.Property<string>("cpf_usuario")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConfirmaSenha")
                         .IsRequired()
@@ -96,57 +68,25 @@ namespace sistemaRH.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdCadastro");
+                    b.HasKey("cpf_usuario");
 
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("sistemaRH.Models.ValorHora", b =>
-                {
-                    b.Property<int>("IdValorHora")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdValorHora"), 1L, 1);
-
-                    b.Property<decimal>("Valor")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("IdValorHora");
-
-                    b.ToTable("ValorHoras");
-                });
-
             modelBuilder.Entity("sistemaRH.Models.Trabalho", b =>
                 {
-                    b.HasOne("sistemaRH.Models.Atividade", "Atividade")
-                        .WithMany()
-                        .HasForeignKey("AtividadeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("sistemaRH.Models.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("CadastroId")
+                        .WithMany("Trabalho")
+                        .HasForeignKey("cpf_usuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("sistemaRH.Models.ValorHora", "ValoHora")
-                        .WithMany("trabalhos")
-                        .HasForeignKey("ValorHoraId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Atividade");
 
                     b.Navigation("Usuario");
-
-                    b.Navigation("ValoHora");
                 });
 
-            modelBuilder.Entity("sistemaRH.Models.ValorHora", b =>
+            modelBuilder.Entity("sistemaRH.Models.Usuario", b =>
                 {
-                    b.Navigation("trabalhos");
+                    b.Navigation("Trabalho");
                 });
 #pragma warning restore 612, 618
         }

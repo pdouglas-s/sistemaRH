@@ -12,7 +12,7 @@ namespace sistemaRH.Models
 
         [Column(TypeName ="decimal(18,2)")]
         [Required(ErrorMessage = "Obrigatório informar o valor!")]
-        public decimal Valor { get; set; } = default!;
+        public decimal Valor { get; set; }
 
     }
 
