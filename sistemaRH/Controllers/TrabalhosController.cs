@@ -21,7 +21,7 @@ namespace sistemaRH.Controllers
         // GET: Trabalhos
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Trabalhos.Include(t => t.Usuario);
+            var applicationDbContext = _context.Trabalhos.Include(t => t.Atividade).Include(t => t.Usuario);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -34,6 +34,7 @@ namespace sistemaRH.Controllers
             }
 
             var trabalho = await _context.Trabalhos
+                .Include(t => t.Atividade)
                 .Include(t => t.Usuario)
                 .FirstOrDefaultAsync(m => m.IdTrabalho == id);
             if (trabalho == null)
@@ -47,6 +48,7 @@ namespace sistemaRH.Controllers
         // GET: Trabalhos/Create
         public IActionResult Create()
         {
+            ViewData["IdAtividade"] = new SelectList(_context.Atividades, "IdAtividade", "Descricao");
             ViewData["cpf_usuario"] = new SelectList(_context.Usuarios, "cpf_usuario", "cpf_usuario");
             return View();
         }
@@ -56,7 +58,7 @@ namespace sistemaRH.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTrabalho,DescTrabalho,cpf_usuario")] Trabalho trabalho)
+        public async Task<IActionResult> Create([Bind("IdTrabalho,cpf_usuario,IdAtividade")] Trabalho trabalho)
         {
             if (ModelState.IsValid)
             {
@@ -64,6 +66,7 @@ namespace sistemaRH.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdAtividade"] = new SelectList(_context.Atividades, "IdAtividade", "Descricao", trabalho.IdAtividade);
             ViewData["cpf_usuario"] = new SelectList(_context.Usuarios, "cpf_usuario", "cpf_usuario", trabalho.cpf_usuario);
             return View(trabalho);
         }
@@ -81,6 +84,7 @@ namespace sistemaRH.Controllers
             {
                 return NotFound();
             }
+            ViewData["IdAtividade"] = new SelectList(_context.Atividades, "IdAtividade", "Descricao", trabalho.IdAtividade);
             ViewData["cpf_usuario"] = new SelectList(_context.Usuarios, "cpf_usuario", "cpf_usuario", trabalho.cpf_usuario);
             return View(trabalho);
         }
@@ -90,7 +94,7 @@ namespace sistemaRH.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTrabalho,DescTrabalho,cpf_usuario")] Trabalho trabalho)
+        public async Task<IActionResult> Edit(int id, [Bind("IdTrabalho,cpf_usuario,IdAtividade")] Trabalho trabalho)
         {
             if (id != trabalho.IdTrabalho)
             {
@@ -117,6 +121,7 @@ namespace sistemaRH.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdAtividade"] = new SelectList(_context.Atividades, "IdAtividade", "Descricao", trabalho.IdAtividade);
             ViewData["cpf_usuario"] = new SelectList(_context.Usuarios, "cpf_usuario", "cpf_usuario", trabalho.cpf_usuario);
             return View(trabalho);
         }
@@ -130,6 +135,7 @@ namespace sistemaRH.Controllers
             }
 
             var trabalho = await _context.Trabalhos
+                .Include(t => t.Atividade)
                 .Include(t => t.Usuario)
                 .FirstOrDefaultAsync(m => m.IdTrabalho == id);
             if (trabalho == null)

@@ -29,8 +29,8 @@ namespace sistemaRH.Models
         [Required(ErrorMessage = "Obrigatório informar perfil!")]
         public Perfil Perfil { get; set; }
 
-        public ICollection<Trabalho>? Trabalho { get; set; } 
-
+        public ICollection<Trabalho>? Trabalho { get; set; }
+        public ICollection<Atividade>? Atividade { get; set; }
     }
 
     public enum Perfil
