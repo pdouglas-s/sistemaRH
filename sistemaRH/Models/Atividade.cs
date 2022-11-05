@@ -19,19 +19,14 @@ namespace sistemaRH.Models
         [Required(ErrorMessage = "Obrigatório informar nível de dificuldade")]
         public NivelDificuldade Nivel { get; set; }
 
-        public string cpf_usuario { get; set; }
-        [ForeignKey("cpf_usuario")]
-        public Usuario? Usuario { get; set; }
-
-        public int IdValorHora { get; set; }
-        [ForeignKey("IdValorHora")]
+        public int? IdValor { get; set; }
+        [ForeignKey("IdValor")]
         public ValorHora? ValorHora { get; set; }
-
-        public ICollection<Trabalho>? Trabalho { get; set; }
 
     }
 
-    public enum NivelDificuldade { 
+    public enum NivelDificuldade
+    {
         Fácil,
         Médio,
         Díficil

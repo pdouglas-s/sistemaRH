@@ -8,14 +8,13 @@ namespace sistemaRH.Models
     public class ValorHora
     {
         [Key]
-        public int IdValorHora { get; set; } 
+        public int IdValorHora { get; set; }
 
-        [Column(TypeName ="decimal(18,2)")]
+        [Column(TypeName = "decimal(18,2)")]
         [Required(ErrorMessage = "Obrigatório informar o valor!")]
         public decimal Valor { get; set; }
 
-        public ICollection<Atividade>? Atividade { get; set; }
-
     }
+
 
 }

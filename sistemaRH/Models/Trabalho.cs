@@ -9,13 +9,11 @@ namespace sistemaRH.Models
     {
         [Key]
         public int IdTrabalho { get; set; }
-        public string cpf_usuario { get; set; }
-         [ForeignKey("cpf_usuario")]
-        public Usuario? Usuario { get; set; }
 
-        public int IdAtividade { get; set; }
-        [ForeignKey("IdAtividade")]
-        public Atividade? Atividade { get; set; }
+        public string DescTrabalho { get; set; }
+        public string cpf_usuario { get; set; }
+        [ForeignKey("cpf_usuario")]
+        public Usuario? Usuario { get; set; }
 
     }
 }

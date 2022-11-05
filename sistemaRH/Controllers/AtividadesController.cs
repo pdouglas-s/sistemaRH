@@ -47,7 +47,7 @@ namespace sistemaRH.Controllers
         // GET: Atividades/Create
         public IActionResult Create()
         {
-            ViewData["IdValorHora"] = new SelectList(_context.ValorHoras, "IdValorHora", "IdValorHora");
+            ViewData["IdValor"] = new SelectList(_context.ValorHoras, "IdValorHora", "IdValorHora");
             return View();
         }
 
@@ -56,7 +56,7 @@ namespace sistemaRH.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdAtividade,Descricao,Nivel,IdValorHora")] Atividade atividade)
+        public async Task<IActionResult> Create([Bind("IdAtividade,Descricao,Nivel,IdValor")] Atividade atividade)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace sistemaRH.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdValorHora"] = new SelectList(_context.ValorHoras, "IdValorHora", "IdValorHora", atividade.IdValorHora);
+            ViewData["IdValor"] = new SelectList(_context.ValorHoras, "IdValorHora", "IdValorHora", atividade.IdValor);
             return View(atividade);
         }
 
@@ -81,7 +81,7 @@ namespace sistemaRH.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdValorHora"] = new SelectList(_context.ValorHoras, "IdValorHora", "IdValorHora", atividade.IdValorHora);
+            ViewData["IdValor"] = new SelectList(_context.ValorHoras, "IdValorHora", "IdValorHora", atividade.IdValor);
             return View(atividade);
         }
 
@@ -90,7 +90,7 @@ namespace sistemaRH.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdAtividade,Descricao,Nivel,IdValorHora")] Atividade atividade)
+        public async Task<IActionResult> Edit(int id, [Bind("IdAtividade,Descricao,Nivel,IdValor")] Atividade atividade)
         {
             if (id != atividade.IdAtividade)
             {
@@ -117,7 +117,7 @@ namespace sistemaRH.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdValorHora"] = new SelectList(_context.ValorHoras, "IdValorHora", "IdValorHora", atividade.IdValorHora);
+            ViewData["IdValor"] = new SelectList(_context.ValorHoras, "IdValorHora", "IdValorHora", atividade.IdValor);
             return View(atividade);
         }
 

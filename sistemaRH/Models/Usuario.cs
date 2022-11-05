@@ -22,7 +22,7 @@ namespace sistemaRH.Models
         public string Senha { get; set; }
 
         [Required(ErrorMessage = "Obrigatório confirmar senha!")]
-        [Display(Name ="Confirmar senha ")]
+        [Display(Name = "Confirmar senha ")]
         [DataType(DataType.Password)]
         public string ConfirmaSenha { get; set; }
 
@@ -30,7 +30,7 @@ namespace sistemaRH.Models
         public Perfil Perfil { get; set; }
 
         public ICollection<Trabalho>? Trabalho { get; set; }
-        public ICollection<Atividade>? Atividade { get; set; }
+
     }
 
     public enum Perfil
