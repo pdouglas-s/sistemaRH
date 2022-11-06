@@ -13,15 +13,21 @@ namespace sistemaRH.Models
 
         [Display(Name = "Descrição")]
         [Required(ErrorMessage = "Obrigatório informar a descrição da atividade")]
-        public string Descricao { get; set; }
+        public string? Descricao { get; set; }
 
         [Display(Name = "Nível dificuldade")]
         [Required(ErrorMessage = "Obrigatório informar nível de dificuldade")]
         public NivelDificuldade Nivel { get; set; }
 
-        public int? IdValor { get; set; }
-        [ForeignKey("IdValor")]
+        [Display(Name = "Valor atividade")]
+        [Required(ErrorMessage = "Obrigatório informar o valor da atividade")]
+        public int? IdValorHora { get; set; }
+        [ForeignKey("IdValorHora")]
+
+        [Display(Name = "Valor atividade")]
         public ValorHora? ValorHora { get; set; }
+
+        public ICollection<Trabalho>? Trabalho { get; set; }
 
     }
 

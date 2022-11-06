@@ -14,6 +14,8 @@ namespace sistemaRH.Models
         [Required(ErrorMessage = "Obrigatório informar o valor!")]
         public decimal Valor { get; set; }
 
+        public ICollection<Atividade>? Atividade { get; set; }
+
     }
 
 

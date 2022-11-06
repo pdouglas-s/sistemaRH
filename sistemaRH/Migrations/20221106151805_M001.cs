@@ -12,7 +12,8 @@ namespace sistemaRH.Migrations
                 name: "Usuarios",
                 columns: table => new
                 {
-                    cpf_usuario = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IdUsuario = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Senha = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -21,7 +22,7 @@ namespace sistemaRH.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuarios", x => x.cpf_usuario);
+                    table.PrimaryKey("PK_Usuarios", x => x.IdUsuario);
                 });
 
             migrationBuilder.CreateTable(
@@ -38,26 +39,6 @@ namespace sistemaRH.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Trabalhos",
-                columns: table => new
-                {
-                    IdTrabalho = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DescTrabalho = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    cpf_usuario = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Trabalhos", x => x.IdTrabalho);
-                    table.ForeignKey(
-                        name: "FK_Trabalhos_Usuarios_cpf_usuario",
-                        column: x => x.cpf_usuario,
-                        principalTable: "Usuarios",
-                        principalColumn: "cpf_usuario",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Atividades",
                 columns: table => new
                 {
@@ -65,42 +46,71 @@ namespace sistemaRH.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nivel = table.Column<int>(type: "int", nullable: false),
-                    IdValor = table.Column<int>(type: "int", nullable: true)
+                    IdValorHora = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Atividades", x => x.IdAtividade);
                     table.ForeignKey(
-                        name: "FK_Atividades_ValorHoras_IdValor",
-                        column: x => x.IdValor,
+                        name: "FK_Atividades_ValorHoras_IdValorHora",
+                        column: x => x.IdValorHora,
                         principalTable: "ValorHoras",
                         principalColumn: "IdValorHora");
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Atividades_IdValor",
-                table: "Atividades",
-                column: "IdValor");
+            migrationBuilder.CreateTable(
+                name: "Trabalhos",
+                columns: table => new
+                {
+                    IdTrabalho = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdUsuario = table.Column<int>(type: "int", nullable: true),
+                    IdAtividade = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Trabalhos", x => x.IdTrabalho);
+                    table.ForeignKey(
+                        name: "FK_Trabalhos_Atividades_IdAtividade",
+                        column: x => x.IdAtividade,
+                        principalTable: "Atividades",
+                        principalColumn: "IdAtividade");
+                    table.ForeignKey(
+                        name: "FK_Trabalhos_Usuarios_IdUsuario",
+                        column: x => x.IdUsuario,
+                        principalTable: "Usuarios",
+                        principalColumn: "IdUsuario");
+                });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Trabalhos_cpf_usuario",
+                name: "IX_Atividades_IdValorHora",
+                table: "Atividades",
+                column: "IdValorHora");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Trabalhos_IdAtividade",
                 table: "Trabalhos",
-                column: "cpf_usuario");
+                column: "IdAtividade");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Trabalhos_IdUsuario",
+                table: "Trabalhos",
+                column: "IdUsuario");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Atividades");
-
-            migrationBuilder.DropTable(
                 name: "Trabalhos");
 
             migrationBuilder.DropTable(
-                name: "ValorHoras");
+                name: "Atividades");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");
+
+            migrationBuilder.DropTable(
+                name: "ValorHoras");
         }
     }
 }

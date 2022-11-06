@@ -25,7 +25,7 @@ namespace sistemaRH.Controllers
         }
 
         // GET: Usuarios/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Usuarios == null)
             {
@@ -33,7 +33,7 @@ namespace sistemaRH.Controllers
             }
 
             var usuario = await _context.Usuarios
-                .FirstOrDefaultAsync(m => m.cpf_usuario == id);
+                .FirstOrDefaultAsync(m => m.IdUsuario == id);
             if (usuario == null)
             {
                 return NotFound();
@@ -53,7 +53,7 @@ namespace sistemaRH.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("cpf_usuario,Nome,Email,Senha,ConfirmaSenha,Perfil")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("IdUsuario,Nome,Email,Senha,ConfirmaSenha,Perfil")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace sistemaRH.Controllers
         }
 
         // GET: Usuarios/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Usuarios == null)
             {
@@ -85,9 +85,9 @@ namespace sistemaRH.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("cpf_usuario,Nome,Email,Senha,ConfirmaSenha,Perfil")] Usuario usuario)
+        public async Task<IActionResult> Edit(int? id, [Bind("IdUsuario,Nome,Email,Senha,ConfirmaSenha,Perfil")] Usuario usuario)
         {
-            if (id != usuario.cpf_usuario)
+            if (id != usuario.IdUsuario)
             {
                 return NotFound();
             }
@@ -101,7 +101,7 @@ namespace sistemaRH.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UsuarioExists(usuario.cpf_usuario))
+                    if (!UsuarioExists(usuario.IdUsuario))
                     {
                         return NotFound();
                     }
@@ -116,7 +116,7 @@ namespace sistemaRH.Controllers
         }
 
         // GET: Usuarios/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Usuarios == null)
             {
@@ -124,7 +124,7 @@ namespace sistemaRH.Controllers
             }
 
             var usuario = await _context.Usuarios
-                .FirstOrDefaultAsync(m => m.cpf_usuario == id);
+                .FirstOrDefaultAsync(m => m.IdUsuario == id);
             if (usuario == null)
             {
                 return NotFound();
@@ -136,7 +136,7 @@ namespace sistemaRH.Controllers
         // POST: Usuarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             if (_context.Usuarios == null)
             {
@@ -152,9 +152,9 @@ namespace sistemaRH.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UsuarioExists(string id)
+        private bool UsuarioExists(int? id)
         {
-          return _context.Usuarios.Any(e => e.cpf_usuario == id);
+          return _context.Usuarios.Any(e => e.IdUsuario == id);
         }
     }
 }
