@@ -12,7 +12,7 @@ using sistemaRH.Models;
 namespace sistemaRH.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221105233532_M001")]
+    [Migration("20221106151805_M001")]
     partial class M001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,7 +36,7 @@ namespace sistemaRH.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IdValor")
+                    b.Property<int?>("IdValorHora")
                         .HasColumnType("int");
 
                     b.Property<int>("Nivel")
@@ -44,7 +44,7 @@ namespace sistemaRH.Migrations
 
                     b.HasKey("IdAtividade");
 
-                    b.HasIndex("IdValor");
+                    b.HasIndex("IdValorHora");
 
                     b.ToTable("Atividades");
                 });
@@ -57,25 +57,28 @@ namespace sistemaRH.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTrabalho"), 1L, 1);
 
-                    b.Property<string>("DescTrabalho")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("IdAtividade")
+                        .HasColumnType("int");
 
-                    b.Property<string>("cpf_usuario")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("IdUsuario")
+                        .HasColumnType("int");
 
                     b.HasKey("IdTrabalho");
 
-                    b.HasIndex("cpf_usuario");
+                    b.HasIndex("IdAtividade");
+
+                    b.HasIndex("IdUsuario");
 
                     b.ToTable("Trabalhos");
                 });
 
             modelBuilder.Entity("sistemaRH.Models.Usuario", b =>
                 {
-                    b.Property<string>("cpf_usuario")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("IdUsuario")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("IdUsuario"), 1L, 1);
 
                     b.Property<string>("ConfirmaSenha")
                         .IsRequired()
@@ -96,7 +99,7 @@ namespace sistemaRH.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("cpf_usuario");
+                    b.HasKey("IdUsuario");
 
                     b.ToTable("Usuarios");
                 });
@@ -120,26 +123,40 @@ namespace sistemaRH.Migrations
             modelBuilder.Entity("sistemaRH.Models.Atividade", b =>
                 {
                     b.HasOne("sistemaRH.Models.ValorHora", "ValorHora")
-                        .WithMany()
-                        .HasForeignKey("IdValor");
+                        .WithMany("Atividade")
+                        .HasForeignKey("IdValorHora");
 
                     b.Navigation("ValorHora");
                 });
 
             modelBuilder.Entity("sistemaRH.Models.Trabalho", b =>
                 {
+                    b.HasOne("sistemaRH.Models.Atividade", "Atividade")
+                        .WithMany("Trabalho")
+                        .HasForeignKey("IdAtividade");
+
                     b.HasOne("sistemaRH.Models.Usuario", "Usuario")
                         .WithMany("Trabalho")
-                        .HasForeignKey("cpf_usuario")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdUsuario");
+
+                    b.Navigation("Atividade");
 
                     b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("sistemaRH.Models.Atividade", b =>
+                {
+                    b.Navigation("Trabalho");
                 });
 
             modelBuilder.Entity("sistemaRH.Models.Usuario", b =>
                 {
                     b.Navigation("Trabalho");
+                });
+
+            modelBuilder.Entity("sistemaRH.Models.ValorHora", b =>
+                {
+                    b.Navigation("Atividade");
                 });
 #pragma warning restore 612, 618
         }

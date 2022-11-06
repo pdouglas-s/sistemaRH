@@ -7,24 +7,22 @@ namespace sistemaRH.Models
     public class Usuario
     {
         [Key]
-        [Display(Name = "CPF")]
-        [Required(ErrorMessage = "Obrigatório Informar o CPF")]
-        public string cpf_usuario { get; set; }
+        public int? IdUsuario { get; set; }
 
         [Required(ErrorMessage = "Obrigatório informar nome!")]
-        public string Nome { get; set; }
+        public string? Nome { get; set; }
 
         [Required(ErrorMessage = "Obrigatório informar email!")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         [Required(ErrorMessage = "Obrigatório informar senha!")]
         [DataType(DataType.Password)]
-        public string Senha { get; set; }
+        public string? Senha { get; set; }
 
         [Required(ErrorMessage = "Obrigatório confirmar senha!")]
         [Display(Name = "Confirmar senha ")]
         [DataType(DataType.Password)]
-        public string ConfirmaSenha { get; set; }
+        public string? ConfirmaSenha { get; set; }
 
         [Required(ErrorMessage = "Obrigatório informar perfil!")]
         public Perfil Perfil { get; set; }
